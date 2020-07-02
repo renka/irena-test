@@ -39,7 +39,7 @@ public class BooksController {
             BookDto book = bookService.getBook(id);
             return new BaseResponse<>(book);
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, "No book found", log);
+            return ErrorHandlingUtil.getErrorResponse(e, log);
         }
     }
 
@@ -48,7 +48,7 @@ public class BooksController {
         try {
             return new BaseResponse<>(bookService.addBook(bookDto));
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, "Error saving book", log);
+            return ErrorHandlingUtil.getErrorResponse(e, log);
         }
     }
 
@@ -58,7 +58,7 @@ public class BooksController {
             PurchaseDto purchase = bookService.checkoutBook(purchaseDto);
             return new BaseResponse<>(purchase);
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, "Error occured", log);
+            return ErrorHandlingUtil.getErrorResponse(e, log);
         }
     }
 

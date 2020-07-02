@@ -86,8 +86,13 @@ public class BookService {
         BigDecimal amountPaid = book.getPrice().multiply(BigDecimal.valueOf(purchaseDto.getNumberOfBooks()));
         String purchaseId = String.valueOf(System.currentTimeMillis()).substring(START_RANDOM_TIMESTAMP, END_RANDOM_TIMESTAMP);
         Purchase purchase = purchaseRepository.save(new Purchase(purchaseId, user, book, purchaseDto.getNumberOfBooks(), amountPaid, new Timestamp(System.currentTimeMillis())));
-        books.setAmount(books.getAmount() - purchase.getNumberOfBooks());
-        booksStorageRepository.save(books);
-        return purchase.toDto();
+        int restBooks = books.getAmount() - purchase.getNumberOfBooks();
+        if (restBooks > 0) {
+            books.setAmount(restBooks);
+            booksStorageRepository.save(books);
+            return purchase.toDto();
+        } else {
+            throw new BookException("Required amount is absent in storage");
+        }
     }
 }

@@ -28,7 +28,7 @@ public class AuthController {
             userDto = userService.registerUser(userDto);
             return new BaseResponse<>(userDto.getPassword(), "User created successfully. Your password");
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, e.getMessage(), log);
+            return ErrorHandlingUtil.getErrorResponse(e, log);
         }
     }
     @PostMapping("login")
@@ -37,7 +37,7 @@ public class AuthController {
             userDto = userService.login(userDto);
             return new BaseResponse<>(userDto);
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, e.getMessage(), log);
+            return ErrorHandlingUtil.getErrorResponse(e, log);
         }
     }
 
