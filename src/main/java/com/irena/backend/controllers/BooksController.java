@@ -6,6 +6,7 @@ import com.irena.backend.entities.Book;
 import com.irena.backend.services.BookService;
 import com.irena.backend.services.UserService;
 import com.irena.backend.utils.BaseResponse;
+import com.irena.backend.utils.Constants;
 import com.irena.backend.utils.ErrorHandlingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = Constants.UI_HOST, maxAge = Constants.CORS_AGE)
 @RestController
 public class BooksController {
 
