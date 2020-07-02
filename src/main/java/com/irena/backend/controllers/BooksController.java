@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @CrossOrigin(origins = Constants.UI_HOST, maxAge = Constants.CORS_AGE)
@@ -34,31 +35,31 @@ public class BooksController {
     }
 
     @GetMapping("books/{id}")
-    public BaseResponse<BookDto> getBook(@PathVariable Long id) {
+    public BaseResponse<BookDto> getBook(@PathVariable Long id, HttpServletResponse response) {
         try {
             BookDto book = bookService.getBook(id);
             return new BaseResponse<>(book);
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, log);
+            return ErrorHandlingUtil.getErrorResponse(e, log, response);
         }
     }
 
     @PostMapping("books/add")
-    public BaseResponse<BookDto> addBook(@RequestBody BookDto bookDto) {
+    public BaseResponse<BookDto> addBook(@RequestBody BookDto bookDto, HttpServletResponse response) {
         try {
             return new BaseResponse<>(bookService.addBook(bookDto));
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, log);
+            return ErrorHandlingUtil.getErrorResponse(e, log, response);
         }
     }
 
     @PostMapping("books/checkout")
-    public BaseResponse<PurchaseDto> checkoutBook(@RequestBody PurchaseDto purchaseDto) {
+    public BaseResponse<PurchaseDto> checkoutBook(@RequestBody PurchaseDto purchaseDto, HttpServletResponse response) {
         try {
             PurchaseDto purchase = bookService.checkoutBook(purchaseDto);
             return new BaseResponse<>(purchase);
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, log);
+            return ErrorHandlingUtil.getErrorResponse(e, log, response);
         }
     }
 

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 @CrossOrigin(origins = Constants.UI_HOST, maxAge = Constants.CORS_AGE)
 @RestController
 public class AuthController {
@@ -23,21 +25,21 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("register")
-    public BaseResponse<String> register(@RequestBody UserDto userDto) {
+    public BaseResponse<String> register(@RequestBody UserDto userDto, HttpServletResponse response) {
         try {
             userDto = userService.registerUser(userDto);
             return new BaseResponse<>(userDto.getPassword(), "User created successfully. Your password");
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, log);
+            return ErrorHandlingUtil.getErrorResponse(e, log, response);
         }
     }
     @PostMapping("login")
-    public BaseResponse<UserDto> login(@RequestBody UserDto userDto) {
+    public BaseResponse<UserDto> login(@RequestBody UserDto userDto, HttpServletResponse response) {
         try {
             userDto = userService.login(userDto);
             return new BaseResponse<>(userDto);
         } catch (Exception e) {
-            return ErrorHandlingUtil.getErrorResponse(e, log);
+            return ErrorHandlingUtil.getErrorResponse(e, log, response);
         }
     }
 
